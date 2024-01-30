@@ -1,0 +1,105 @@
+.header {    
+    max-width: 1440px;
+    width: 100%;        
+    height: 576px;      
+    padding-left: 29%; 
+    padding-right: 29%;  
+    color: #fff;
+    background-image: url('../../images/Header/header_1440.png');
+    background-size: cover;
+    background-repeat: no-repeat;        
+    margin: auto;    
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .header__title{
+    width: 608px;
+    padding-top: 160px;
+    font-family: "Roboto Slab";
+    font-weight: 400;
+    font-size: 61px;
+    line-height: 64px;
+
+  }
+
+  .header__description{
+    width: 608px;
+    padding-top: 32px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+
+  }
+
+  @media screen and (max-width: 920px) {
+
+    .header {        
+        background-image: url('../../images/Header/header_768.png');
+    }    
+  }
+
+  
+  
+
+  @media screen and (max-width: 768px) {
+    .header {
+        width: 768px;
+        height: 400px;     
+    }
+    
+    .header__title{
+        width: 385px;
+        padding-top: 104px;    
+        padding-right: 73px;
+        font-size: 36px;
+        line-height: 40px;       
+      }
+
+      .header__description{
+       width: 452px;
+        padding-top: 16px;                 
+      }
+  }
+
+  
+  @media screen and (max-width: 767px) {
+    .header {
+        max-width: 767px;
+        min-width: 320px;     
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 661px) {
+    .header {    
+        background-image: url('../../images/Header/header_320.png');
+    }    
+}
+
+  @media screen and (max-width: 500px) {
+    .header {
+        height: 536px;
+       
+    }
+    
+    .header__title{
+        width: 285px;    
+        padding-top: 86px;    
+        padding-left: 19px;
+        padding-right: 16px;
+        font-size: 32px;        
+      }
+
+      .header__description{
+        width: 285px; 
+        padding-top: 16px;
+        padding-left: 16px;
+        padding-right: 16px;
+        font-size: 20px;
+      }
+  }
+

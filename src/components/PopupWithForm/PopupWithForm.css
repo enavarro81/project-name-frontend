@@ -1,0 +1,230 @@
+
+.popup{
+    align-items: center;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    opacity: 1;
+    top: 0;
+    position: fixed;    
+    visibility:hidden;
+    width: 100vw;
+    z-index: 2;
+}
+
+.popup_theme_opened{
+    visibility:visible;
+}
+
+
+.popup__button-close{
+    cursor: pointer;
+    background-image: url(../../images/PopupWithForm/close.png);
+    width: 40px;
+    height: 40px;
+    margin-left: 465px;    
+}
+
+.popup__form {
+    width: 430px;    
+    padding: 34px 36px 28px 36px;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    border-radius: 16px;
+    background-color: #fff;    
+}
+
+.popup__form input::placeholder {
+    color: #B6BCBF;
+}
+
+.popup__form input:focus {
+    border-color: #000;
+}
+
+.popup__form-session {
+    display: none;
+}
+
+.popup__form-session_theme_opened {
+    display: block;
+}
+
+.popup__form-signin {
+    display: none;
+}
+
+.popup__form-signin_theme_opened {
+    display: block;
+}
+
+.popup__form-success {
+    display: none;
+}
+
+.popup__form-success_theme_opened {
+    display: block;
+}
+
+.popup__title{
+    margin:0;
+    font-family: "Roboto";
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.popup__title-success{
+    width: 315px;
+}
+
+.popup__email-title{
+    margin:0;
+    padding-top: 22px;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #2F71E5;
+}
+
+.popup__email-input{
+    margin:0;
+    padding-top: 13px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    outline: 0;
+    width: 100%;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.popup__password-title{
+    margin: 0;
+    padding-top: 31px;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #2F71E5;
+}
+
+.popup__password-input{
+    margin:0;
+    padding-top: 13px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    outline: 0;
+    width: 100%;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.popup__user-title{
+    margin: 0;
+    padding-top: 31px;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #2F71E5;
+}
+
+.popup__user-input{
+    margin:0;
+    padding-top: 13px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    outline: 0;
+    width: 100%;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.popup__error{
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: red;
+}
+
+.popup__error-submit{
+    padding-top: 17px;
+    text-align: center;
+}
+
+.popup__button{
+    cursor: pointer;
+    margin:0;    
+    margin-top: 8px;
+    width: 100%;
+    height: 64px;
+    border-radius: 40px;    
+    border: 0;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;    
+    background-color: #2F71E5;
+    color: #fff;
+    box-shadow: 0px 5px 15px 0px #0E1A3933;
+}
+
+.popup__button_disable{
+    background-color: #E6E8EB;    
+    color: #B6BCBF;
+    pointer-events: none;
+}
+
+.popup__button:hover{
+    background-color: #347EFF;    
+}
+
+.popup__button:active {
+    background-color: #2A65CC;
+}
+
+.popup__signin{
+    cursor: pointer;
+    color: #2F71E5;
+    margin:0;
+    padding-top: 16px;    
+    width: 100%;
+    text-align: center;
+    font-family: "Source Sans Pro";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.popup__signin-success{
+    text-align: left;
+}
+
+
+@media screen and (max-width: 320px) {
+    .popup__form {
+        width: 320px;        
+        padding: 16px 16px 28px 16px;
+        margin: 0;
+        box-sizing: border-box;
+        border: 1px solid #000000;
+        border-radius: 16px;
+        background-color: #fff;    
+    }
+
+    .popup__button-close{
+      margin-left: 275px;
+    }
+
+}
