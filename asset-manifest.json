@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.a2032a32.chunk.css",
-    "main.js": "/static/js/main.61be2b3e.chunk.js",
-    "main.js.map": "/static/js/main.61be2b3e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.9126d639.js",
-    "runtime-main.js.map": "/static/js/runtime-main.9126d639.js.map",
-    "static/js/2.4683181a.chunk.js": "/static/js/2.4683181a.chunk.js",
-    "static/js/2.4683181a.chunk.js.map": "/static/js/2.4683181a.chunk.js.map",
-    "static/js/3.49f890b1.chunk.js": "/static/js/3.49f890b1.chunk.js",
-    "static/js/3.49f890b1.chunk.js.map": "/static/js/3.49f890b1.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.cbd50db7a71074cecc927fb632482e91.js": "/precache-manifest.cbd50db7a71074cecc927fb632482e91.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.a2032a32.chunk.css.map": "/static/css/main.a2032a32.chunk.css.map",
-    "static/js/2.4683181a.chunk.js.LICENSE.txt": "/static/js/2.4683181a.chunk.js.LICENSE.txt",
-    "static/media/about_1440.png": "/static/media/about_1440.919291d3.png",
-    "static/media/Header.css": "/static/media/header_768.3cf9dbe0.png",
-    "static/media/index.css": "/static/media/roboto-slab-700.607d7c73.woff"
+    "main.css": "/project-name-frontend/static/css/main.4c44f25d.chunk.css",
+    "main.js": "/project-name-frontend/static/js/main.61be2b3e.chunk.js",
+    "main.js.map": "/project-name-frontend/static/js/main.61be2b3e.chunk.js.map",
+    "runtime-main.js": "/project-name-frontend/static/js/runtime-main.a1b5a09d.js",
+    "runtime-main.js.map": "/project-name-frontend/static/js/runtime-main.a1b5a09d.js.map",
+    "static/js/2.4683181a.chunk.js": "/project-name-frontend/static/js/2.4683181a.chunk.js",
+    "static/js/2.4683181a.chunk.js.map": "/project-name-frontend/static/js/2.4683181a.chunk.js.map",
+    "static/js/3.49f890b1.chunk.js": "/project-name-frontend/static/js/3.49f890b1.chunk.js",
+    "static/js/3.49f890b1.chunk.js.map": "/project-name-frontend/static/js/3.49f890b1.chunk.js.map",
+    "index.html": "/project-name-frontend/index.html",
+    "precache-manifest.849ee7699746fade57c222e1a48a64e0.js": "/project-name-frontend/precache-manifest.849ee7699746fade57c222e1a48a64e0.js",
+    "service-worker.js": "/project-name-frontend/service-worker.js",
+    "static/css/main.4c44f25d.chunk.css.map": "/project-name-frontend/static/css/main.4c44f25d.chunk.css.map",
+    "static/js/2.4683181a.chunk.js.LICENSE.txt": "/project-name-frontend/static/js/2.4683181a.chunk.js.LICENSE.txt",
+    "static/media/about_1440.png": "/project-name-frontend/static/media/about_1440.919291d3.png",
+    "static/media/Header.css": "/project-name-frontend/static/media/header_768.3cf9dbe0.png",
+    "static/media/index.css": "/project-name-frontend/static/media/roboto-slab-700.607d7c73.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.9126d639.js",
+    "static/js/runtime-main.a1b5a09d.js",
     "static/js/2.4683181a.chunk.js",
-    "static/css/main.a2032a32.chunk.css",
+    "static/css/main.4c44f25d.chunk.css",
     "static/js/main.61be2b3e.chunk.js"
   ]
 }
