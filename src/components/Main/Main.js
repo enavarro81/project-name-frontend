@@ -19,7 +19,9 @@ function Main(props) {
   const [openSectionCardList, setOpenSectionCardList] = React.useState('');
   const [cards, setCards] = React.useState([]);
   const [localCards, setLocalCards] = React.useState(
-    JSON.parse(localStorage.getItem('localCards'))
+    'localCards' in localStorage
+      ? JSON.parse(localStorage.getItem('localCards'))
+      : []
   );
   const [indexlocalCards, setIndexlocalCards] = React.useState(0);
   const [isAllItemsShowing, setIsAllItemsShowing] = React.useState(false);
