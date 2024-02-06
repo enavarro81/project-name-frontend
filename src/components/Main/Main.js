@@ -21,7 +21,7 @@ function Main(props) {
   const [localCards, setLocalCards] = React.useState(
     'localCards' in localStorage
       ? JSON.parse(localStorage.getItem('localCards'))
-      : []
+      : { articles: {} }
   );
   const [indexlocalCards, setIndexlocalCards] = React.useState(0);
   const [isAllItemsShowing, setIsAllItemsShowing] = React.useState(false);
