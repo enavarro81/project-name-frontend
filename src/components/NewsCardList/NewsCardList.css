@@ -1,4 +1,3 @@
-
 .news-card-list{
     width: 100%;
     box-sizing: border-box;
@@ -27,6 +26,7 @@
 
 .news-card-list__not-found-image{
     padding-top: 86px;    
+    filter: contrast(40%);
 }
 
 .news-card-list__not-found-title{    
@@ -170,9 +170,7 @@
         line-height: 34px;     
     }
 
-    .news-card-list__main{
-       /*padding-left: 5%;
-        padding-right: 5%;*/
+    .news-card-list__main{       
         flex-direction: column;
         gap: 10px;
     }

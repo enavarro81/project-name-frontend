@@ -6,117 +6,189 @@ import NewsCardList from '../NewsCardList/NewsCardList';
 import About from '../About/About';
 import Footer from '../Footer/Footer';
 import PopupWithform from '../PopupWithForm/PopupWithForm';
+import { api } from '../../utils/ThirdPartyApi';
 import React from 'react';
+import moment from 'moment';
+import 'moment/locale/es';
 
 function Main(props) {
-  const [isSigninPopupOpen, SetIsSigninPopupOpen] = React.useState(false);
-  const [isRegisterPopupOpen, SetIsRegisterPopupOpen] = React.useState(false);
-  const [isSuccessPopupOpen, SetIsSuccessPopupOpen] = React.useState(false);
-  //const [urlShowing, setUrlShowing] = React.useState('Home');
-  const [headerShowing, setHeaderShowing] = React.useState(0);
+  const [isSigninPopupOpen, setIsSigninPopupOpen] = React.useState(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = React.useState(false);
+  const [isPreloaderOpen, setIsPreloaderOpen] = React.useState(false);
+  const [openSectionCardList, setOpenSectionCardList] = React.useState('');
+  const [cards, setCards] = React.useState([]);
+  const [localCards, setLocalCards] = React.useState(
+    JSON.parse(localStorage.getItem('localCards'))
+  );
+  const [indexlocalCards, setIndexlocalCards] = React.useState(0);
+  const [isAllItemsShowing, setIsAllItemsShowing] = React.useState(false);
+  const [savedCards, setSavedCards] = React.useState(
+    'savedCards' in localStorage
+      ? JSON.parse(localStorage.getItem('savedCards'))
+      : []
+  );
+
+  React.useEffect(() => {
+    if (localCards.articles.length > 0) {
+      setOpenSectionCardList('found');
+    }
+    loadingCards();
+  }, [localCards]);
+
+  React.useEffect(() => {
+    localStorage.setItem('savedCards', JSON.stringify(savedCards));
+  }, [savedCards]);
 
   function handleSigninClick() {
-    SetIsSigninPopupOpen(true);
-    SetIsRegisterPopupOpen(false);
-    SetIsSuccessPopupOpen(false);
+    setIsSigninPopupOpen(true);
+    setIsRegisterPopupOpen(false);
+    setIsSuccessPopupOpen(false);
   }
 
   function handleRegisterClick() {
-    SetIsSigninPopupOpen(false);
-    SetIsRegisterPopupOpen(true);
-    SetIsSuccessPopupOpen(false);
+    setIsSigninPopupOpen(false);
+    setIsRegisterPopupOpen(true);
+    setIsSuccessPopupOpen(false);
   }
 
   function handleSuccessClick() {
-    SetIsSigninPopupOpen(false);
-    SetIsRegisterPopupOpen(false);
-    SetIsSuccessPopupOpen(true);
+    setIsSigninPopupOpen(false);
+    setIsRegisterPopupOpen(false);
+    setIsSuccessPopupOpen(true);
   }
 
   function closePopups() {
-    SetIsSigninPopupOpen(false);
-    SetIsRegisterPopupOpen(false);
-    SetIsSuccessPopupOpen(false);
+    setIsSigninPopupOpen(false);
+    setIsRegisterPopupOpen(false);
+    setIsSuccessPopupOpen(false);
   }
 
-  /*
-  function handleUrlClick(url) {
-    //setUrlShowing(url);
+  function handleAddCardsClick() {
+    loadingCards();
+  }
 
-    url === 'Home' ? setHeaderShowing(0) : setHeaderShowing(3);
-  }*/
+  function loadingCards() {
+    let card = [];
+    let index = indexlocalCards + 1;
+
+    if (localCards.articles.length > 0) {
+      localCards.articles
+        .slice(indexlocalCards, indexlocalCards + 3)
+        .map((entry) => {
+          const date = moment(localCards.articles[indexlocalCards].publishedAt);
+          const formattedDate = `${date.format('D')} de ${date
+            .locale('es')
+            .format('MMMM')} de ${date.format('yyyy')}`;
+
+          card.push({
+            id: index,
+            title: entry.title,
+            date: formattedDate,
+            tag: '',
+            description: entry.description,
+            author: entry.author,
+            image: entry.urlToImage,
+          });
+
+          index += 1;
+          return null;
+        });
+
+      setCards([...cards, ...card.slice(0, 3)]);
+      setIndexlocalCards(index - 1);
+    } else {
+      setCards([]);
+    }
+
+    index > localCards.articles.length
+      ? setIsAllItemsShowing(true)
+      : setIsAllItemsShowing(false);
+  }
 
   function handleSearchClick() {
-    /*
-    esto es temporal para armar el demo los valores son :
-    0 - vacio
-    1 - loading
-    2 - no existe informacion a buscar
-    3 - se muestra elementos
-    */
+    setCards([]);
+    setIndexlocalCards(0);
+    setLocalCards({
+      articles: {},
+    });
 
-    headerShowing === 3
-      ? setHeaderShowing(0)
-      : setHeaderShowing(headerShowing + 1);
+    const inputSearch = document.querySelector(`#searchText`);
+
+    if (inputSearch.value !== '') {
+      const today = new Date();
+      const formattedDate =
+        today.getFullYear() +
+        '-' +
+        (today.getMonth() + 1) +
+        '-' +
+        today.getDate();
+
+      const sevenDaysAgo = new Date(today.getTime() - 24 * 60 * 60 * 1000 * 7);
+      const formattedDate7 =
+        sevenDaysAgo.getFullYear() +
+        '-' +
+        (sevenDaysAgo.getMonth() + 1) +
+        '-' +
+        sevenDaysAgo.getDate();
+
+      setIsPreloaderOpen(true);
+
+      api
+        .getInformation(inputSearch.value, formattedDate7, formattedDate)
+        .then((resp) => {
+          if (resp.totalResults > 0) {
+            const articles = resp.articles;
+
+            const localCards = {
+              articles: articles,
+              tag: inputSearch.value,
+            };
+
+            localStorage.setItem('localCards', JSON.stringify(localCards));
+            setLocalCards(JSON.parse(localStorage.getItem('localCards')));
+
+            setOpenSectionCardList('found');
+          } else {
+            setOpenSectionCardList('not-found');
+          }
+        })
+        .catch((err) => {
+          setOpenSectionCardList('error');
+        });
+
+      setIsPreloaderOpen(false);
+    } else {
+      setOpenSectionCardList('error-input');
+    }
   }
 
-  //lleno manualmente los datos para el demo
-  const cards = [
-    {
-      id: 1,
-      title: 'Todo el mundo necesita un lugar de reflexión en la naturaleza',
-      date: '4 de noviembre de 2020',
-      tag: 'Naturaleza',
-      description:
-        'Desde que leí el influyente libro de Richard Louv, "El último niño en el bosque", la idea de tener un "lugar de reflexión" especial para mi se me ha quedado grabada. Este consejo, que...',
-      author: 'treehugger',
-      image: require('../../images/CardNews/image_08.png'),
-    },
-    {
-      id: 2,
-      title: 'La naturaleza te hace mejor',
-      date: '19 de febrero de 2019',
-      tag: 'Naturaleza',
-      description:
-        'Milenios atrás ya nos percatamos de ello: el sonido del océano, los aromas de un bosque, la forma en que la luz del sol moteada baila entre las hojas.',
-      author: 'national geographic',
-      image: require('../../images/CardNews/image_04.png'),
-    },
-    {
-      id: 3,
-      title:
-        'Fotos nostálgicas hechas por turistas en los parques nacionales de Estados Unidos',
-      date: '19 de octubre de 2020',
-      tag: 'Yellowstone',
-      description:
-        'Uri Løvevild Golman y Helle Løvevild Golman son exploradores de National Geographic y fotógrafos de conservación que acaban de completar un proyecto y un libro que llaman..',
-      author: 'national geographic',
-      image: require('../../images/CardNews/image_05.png'),
-    },
-    {
-      id: 4,
-      title: 'El Grand Teton renueva el histórico Camino de la Cresta',
-      date: '4 de noviembre de 2020',
-      tag: 'Parques',
-      description:
-        'La unión de los senderos de la Cascada y del Cañón de la Muerte en sus picos tuvo lugar el 1 de octubre de 1933, y marcó el primer paso en la realización de un plan por el que el...',
-      author: 'National parks traveler',
-      image: require('../../images/CardNews/image_07.png'),
-    },
-    {
-      id: 5,
-      title:
-        'Los científicos no saben por qué la estrella polar es tan extraña',
-      date: '16 de marzo de 2020',
-      tag: 'Fotografía',
-      description:
-        'Los seres humanos se han basado durante mucho tiempo en el cielo estrellado para adentrarse hacia nuevas fronteras, navegar hasta el fin del mundo y encontrar el camino de vuelta...',
-      author: 'treehugger',
-      image: require('../../images/CardNews/image_01.png'),
-    },
-  ];
+  function handleAddCard({
+    imageUrl,
+    imageDate,
+    imageTitle,
+    imageDescription,
+    imageAuthor,
+  }) {
+    let card = [];
+    let index = savedCards[savedCards.length - 1].id + 1;
 
-  console.log(props.urlShowing);
+    card = {
+      id: index,
+      title: imageTitle,
+      date: imageDate,
+      tag: localCards.tag,
+      description: imageDescription,
+      author: imageAuthor,
+      image: imageUrl,
+    };
+
+    setSavedCards([...savedCards, card]);
+  }
+
+  function handleRemoveCard({ imageTitle, imageAuthor }) {
+    setSavedCards(savedCards.filter((c) => c.title !== imageTitle));
+  }
 
   return (
     <>
@@ -140,20 +212,19 @@ function Main(props) {
       {props.urlShowing === 'Home' ? (
         <Header onSearchClick={handleSearchClick} />
       ) : (
-        <SavedNewsHeader logValues={props.logValues} />
+        <SavedNewsHeader logValues={props.logValues} savedCards={savedCards} />
       )}
-      <Preloader isOpen={headerShowing === 1 ? true : false} />
+      <Preloader isOpen={isPreloaderOpen} />
       <NewsCardList
-        openSection={
-          headerShowing === 2
-            ? 'not-found'
-            : headerShowing === 3 || props.urlShowing === 'Article'
-            ? 'found'
-            : ''
-        }
+        openSection={openSectionCardList}
         urlShowing={props.urlShowing}
         logValues={props.logValues}
+        onAddCards={handleAddCardsClick}
         cards={cards}
+        savedCards={savedCards}
+        isAllItemsShowing={isAllItemsShowing}
+        onAddCard={handleAddCard}
+        onRemoveCard={handleRemoveCard}
       />
       {props.urlShowing === 'Home' ? <About /> : ''}
       <Footer />

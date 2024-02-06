@@ -1,4 +1,3 @@
-
 .popup{
     align-items: center;
     background-color: rgba(0,0,0,.5);
@@ -17,7 +16,6 @@
 .popup_theme_opened{
     visibility:visible;
 }
-
 
 .popup__button-close{
     cursor: pointer;
@@ -210,7 +208,6 @@
 .popup__signin-success{
     text-align: left;
 }
-
 
 @media screen and (max-width: 320px) {
     .popup__form {

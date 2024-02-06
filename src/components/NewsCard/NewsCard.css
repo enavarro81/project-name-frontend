@@ -13,7 +13,7 @@
     width: 100%;
     height: 272px;
     border-radius: 20px 20px 0 0;
-    
+    object-fit: cover;
 }
 
 .news-card__tag-section{
@@ -94,11 +94,11 @@
     background-image: url(../../images/CardNews/bookmark.png);    
 }
 
-.news-card__action-icon_theme_bookmark:hover{    
+.news-card__action-icon_theme_bookmark-login{    
     background-image: url(../../images/CardNews/bookmark_hover.png);
 }
 
-.news-card__action-icon_theme_bookmark:active{    
+.news-card__action-icon_theme_bookmark-saved{    
     background-image: url(../../images/CardNews/bookmark_active.png);
 }
 
@@ -237,7 +237,6 @@
     }
 
 }
-
 
 @media screen and (max-width: 320px) {
     .news-card{        

@@ -161,7 +161,6 @@ function PopupWithform(props) {
 
     props.onLogin(usuario);
     resetPopupForm();
-    /*props.onUrlClick('Article');*/
     navigate('/saved-news', { replace: true });
     props.onClosePopup();
   };

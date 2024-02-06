@@ -49,11 +49,6 @@
     gap: 89px;    
   }
 
-  /*
-  .navigation__links_theme_login{  
-    gap: 58px;
-  }*/
-
   .navigation__links_theme_white{
     border-bottom: 4px solid #fff;   
   }
@@ -178,8 +173,7 @@
 
     .navigation__links-logout{
       margin-top: -10px;
-      font-size: 16px;
-      /*width: 152px;*/
+      font-size: 16px;      
       height: 40px;
       padding: 8px;
      }

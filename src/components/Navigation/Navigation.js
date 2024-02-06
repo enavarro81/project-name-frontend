@@ -17,20 +17,17 @@ function Navigation(props) {
 
   const onLogout = () => {
     setIsMenuOpen(false);
-    //props.onUrlClick('Home');
     navigate('/', { replace: true });
     props.onLogout();
   };
 
   function onClickArticle() {
     setIsMenuOpen(false);
-    //props.onUrlClick('Article');
     navigate('/saved-news', { replace: true });
   }
 
   function onClickHome() {
     setIsMenuOpen(false);
-    //props.onUrlClick('Home');
     navigate('/', { replace: true });
   }
 
