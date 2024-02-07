@@ -19,6 +19,7 @@ El usuario podrá consultar noticias de acuerdo a un tema específico que desee 
 - Media Queries
 - Rutas y organización de Archivos con BEM
 - Git
+- GitHub
 - Figma
 - Javascript
 - POO
