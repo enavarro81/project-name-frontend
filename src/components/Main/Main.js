@@ -134,6 +134,8 @@ function Main(props) {
         '-' +
         sevenDaysAgo.getDate();
 
+      setOpenSectionCardList('');
+
       setIsPreloaderOpen(true);
 
       api
@@ -157,9 +159,10 @@ function Main(props) {
         })
         .catch((err) => {
           setOpenSectionCardList('error');
+        })
+        .finally(() => {
+          setIsPreloaderOpen(false);
         });
-
-      setIsPreloaderOpen(false);
     } else {
       setOpenSectionCardList('error-input');
     }
