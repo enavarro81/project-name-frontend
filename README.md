@@ -28,4 +28,4 @@ El usuario podrá consultar noticias de acuerdo a un tema específico que desee 
 
 **Enlace a GitHub**
 
-- [Enlace al proyecto en GitHub](https://enavarro81.github.io/web_project_4_esp/)
+- [Enlace al proyecto en GitHub](https://enavarro81.github.io/project-name-frontend/)
