@@ -90,6 +90,7 @@ function Main(props) {
             tag: '',
             description: entry.description,
             author: entry.author,
+            url: entry.url,
             image: entry.urlToImage,
           });
 
@@ -170,13 +171,15 @@ function Main(props) {
 
   function handleAddCard({
     imageUrl,
+    imageNewsUrl,
     imageDate,
     imageTitle,
     imageDescription,
     imageAuthor,
   }) {
     let card = [];
-    let index = savedCards[savedCards.length - 1].id + 1;
+    let index =
+      savedCards.length === 0 ? 0 : savedCards[savedCards.length - 1].id + 1;
 
     card = {
       id: index,
@@ -185,6 +188,7 @@ function Main(props) {
       tag: localCards.tag,
       description: imageDescription,
       author: imageAuthor,
+      url: imageNewsUrl,
       image: imageUrl,
     };
 
