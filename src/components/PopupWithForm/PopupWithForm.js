@@ -5,8 +5,23 @@ import { useNavigate } from 'react-router-dom';
 function PopupWithform(props) {
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (props.isOpen && event.key === 'Escape') {
+        props.onClosePopup();
+        resetPopupForm();
+      }
+    };
+
+    if (props.isOpen) window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [props.isOpen]);
+
   const handleClick = (event) => {
-    // Obtiene el elemento que se hizo clic
+    // Obtiene el elemento que se hizo click
     const elementoHechoClick = event.target.parentElement.querySelector(
       event.target.tagName
     );
@@ -114,7 +129,6 @@ function PopupWithform(props) {
       });
 
       //bloqueo de nuevo los botones
-
       const buttonForm = document.querySelector(`#${element.id}-button`);
 
       if (!buttonForm.classList.contains('popup__button_disable')) {
