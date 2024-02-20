@@ -1,0 +1,7 @@
+.popup__form-session {
+    display: none;
+}
+
+.popup__form-session_theme_opened {
+    display: block;
+}

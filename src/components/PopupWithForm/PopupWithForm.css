@@ -43,22 +43,6 @@
     border-color: #000;
 }
 
-.popup__form-session {
-    display: none;
-}
-
-.popup__form-session_theme_opened {
-    display: block;
-}
-
-.popup__form-signin {
-    display: none;
-}
-
-.popup__form-signin_theme_opened {
-    display: block;
-}
-
 .popup__form-success {
     display: none;
 }

@@ -1,10 +1,17 @@
 import React from 'react';
 import './Navigation.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/currentUser';
 
 function Navigation(props) {
   const navigate = useNavigate();
+  const currentUser = React.useContext(CurrentUserContext);
+  const [name, setName] = React.useState('');
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setName(currentUser.name);
+  }, [currentUser]);
 
   function handleMenuOpen() {
     setIsMenuOpen(isMenuOpen ? false : true);
@@ -107,9 +114,7 @@ function Navigation(props) {
           }`}
           onClick={onLogout}
         >
-          <div className='navigation__links-logout-title'>
-            {props.logValues.userLogged}
-          </div>
+          <div className='navigation__links-logout-title'>{name}</div>
           <div
             className={`${
               props.urlShowing === 'Home'

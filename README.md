@@ -1,16 +1,14 @@
-# Proyecto final: Full Stack News Explorer ES (Frontend)
+# Proyecto final: Full Stack News Explorer ES (Frontend) + Etapa 3: Autorización con React
 
 ### Descripción general
 
 - Introducción
 - Tecnologias
-- Enlace a GitHub
+- Enlace a Servidor
 
 **Introducción**
 
-Este proyecto es la culminación de las fases __Etapa 1.1: Etiquetado y JSX__ y __Etapa 1.2: Conectar una API third-party__ del proyecto final pertenciente al bootcamp de _Desarrollador Web_ de **tripleten**, en el cual ponemos en práctica e implementamos todo lo que hemos aprendido a los largo de todo el año. Estas fases consisten en desarrollar e implemetar todo el frontend de un portal de noticias mediante la incorporación de una API de terceros. 
-
-El usuario podrá consultar noticias de acuerdo a un tema específico que desee buscar y en caso de que requiera, estas podrán ser guardadas, mostradas o eliminadas dentro de una sección específica. Hasta que se termine con el desarrollo del backend las cartas serán guardadas localmente.
+Este proyecto es la culminación de las fases __Etapa 1.1: Etiquetado y JSX__ , __Etapa 1.2: Conectar una API third-party__ y __Etapa 1.3: Autorización con React__ del proyecto final pertenciente al bootcamp de _Desarrollador Web_ de **tripleten**, en el cual ponemos en práctica e implementamos todo lo que hemos aprendido a los largo de todo el año. Estas fases consisten en desarrollar e implemetar todo el frontend de un portal de noticias mediante la incorporación de una API de terceros y una API propia para control y gestión de usuarios.
 
 **Tecnologias**
 
@@ -26,7 +24,8 @@ El usuario podrá consultar noticias de acuerdo a un tema específico que desee 
 - Webpack
 - APIs
 - React
+- Google Cloud
 
-**Enlace a GitHub**
+**Enlace a Servidor**
 
-- [Enlace al proyecto en GitHub](https://enavarro81.github.io/project-name-frontend/)
+- [Enlace al proyecto en servidor cloud](https://www.enavarro.desarrollointerno.com/)

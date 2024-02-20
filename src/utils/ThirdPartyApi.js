@@ -26,6 +26,7 @@ export const api = new Api({
   address: 'https://newsapi.org/v2/everything?',
   //cuando cambio a la dirección que presenta el documento del proyecto final , me regresa vacio el arreglo
   //address: 'https://nomoreparties.co/news/v2/top-headlines?',
+  //address: 'https://news.desarrollointerno.com/news/v2/top-headlines?',
   key: '5e7d4c6c6454426ca37b45750e0a36b2',
 });
 

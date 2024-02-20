@@ -27,6 +27,8 @@ function NewsCard(props) {
 
     const element =
       event.target.parentElement.parentElement.parentElement.parentElement;
+
+    const imageId = element.getAttribute('data-id');
     const imageNewsUrl = element.getAttribute('href');
     const imageUrl = element.querySelector('#card-image').getAttribute('src');
     const imageDate = element.querySelector('#card-date').textContent;
@@ -67,22 +69,26 @@ function NewsCard(props) {
         'news-card__action-icon_theme_bookmark-saved'
       );
 
+      //traigo el _id de la new ya que estoy en la pantalla de inicio
+      const newId = props.savedCards.find(
+        (element) =>
+          element.title === imageTitle && element.author === imageAuthor
+      ).id;
+
       props.onRemoveCard({
-        imageTitle,
-        imageAuthor,
+        imageId: newId,
       });
     } else if (
       elementClasses.classList.contains('news-card__action-icon_theme_trash')
     ) {
       props.onRemoveCard({
-        imageTitle,
-        imageAuthor,
+        imageId,
       });
     }
   };
 
   return (
-    <Link to={props.card.url} target='_blank' id='card-url'>
+    <Link to={props.card.url} target='_blank' data-id={props.card.id}>
       <li className='news-card' data-url={props.card.url}>
         <img
           className='news-card__image'

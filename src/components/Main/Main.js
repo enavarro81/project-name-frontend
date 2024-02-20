@@ -7,6 +7,7 @@ import About from '../About/About';
 import Footer from '../Footer/Footer';
 import PopupWithform from '../PopupWithForm/PopupWithForm';
 import { api } from '../../utils/ThirdPartyApi';
+import * as auth from '../../utils/MainApi';
 import React from 'react';
 import moment from 'moment';
 import 'moment/locale/es';
@@ -31,13 +32,39 @@ function Main(props) {
       : []
   );
 
+  const jwt = localStorage.getItem('jwt');
+
+  //Hook que espera a que todas las noticias se cargen en la variable local savedCards para ser cargadas al componente
+  React.useEffect(() => {
+    const checkFileExists = async () => {
+      try {
+        while (!('savedCards' in localStorage)) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+
+        setSavedCards(JSON.parse(localStorage.getItem('savedCards')));
+      } catch (error) {
+        console.error('Error al verificar si el archivo existe:', error);
+      }
+    };
+
+    if (props.updateNewsDB) {
+      checkFileExists();
+      props.handleUpdateNewsDB(false);
+    }
+    // eslint-disable-next-line
+  }, [props.updateNewsDB]);
+
+  //Hook que gestiona la presentación de las noticias
   React.useEffect(() => {
     if (localCards.articles.length > 0) {
       setOpenSectionCardList('found');
     }
     loadingCards();
+    // eslint-disable-next-line
   }, [localCards]);
 
+  //Hook que gestiona las noticias guardadas en variable local
   React.useEffect(() => {
     localStorage.setItem('savedCards', JSON.stringify(savedCards));
   }, [savedCards]);
@@ -177,26 +204,47 @@ function Main(props) {
     imageDescription,
     imageAuthor,
   }) {
-    let card = [];
-    let index =
-      savedCards.length === 0 ? 0 : savedCards[savedCards.length - 1].id + 1;
+    auth
+      .postNew({
+        tag: localCards.tag,
+        title: imageTitle,
+        description: imageDescription,
+        date: imageDate,
+        author: imageAuthor,
+        link: imageNewsUrl,
+        image: imageUrl,
+        token: jwt,
+      })
+      .then((resp) => {
+        let card = [];
 
-    card = {
-      id: index,
-      title: imageTitle,
-      date: imageDate,
-      tag: localCards.tag,
-      description: imageDescription,
-      author: imageAuthor,
-      url: imageNewsUrl,
-      image: imageUrl,
-    };
+        card = {
+          id: resp._id,
+          title: imageTitle,
+          date: imageDate,
+          tag: localCards.tag,
+          description: imageDescription,
+          author: imageAuthor,
+          url: imageNewsUrl,
+          image: imageUrl,
+        };
 
-    setSavedCards([...savedCards, card]);
+        setSavedCards([...savedCards, card]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  function handleRemoveCard({ imageTitle, imageAuthor }) {
-    setSavedCards(savedCards.filter((c) => c.title !== imageTitle));
+  function handleRemoveCard({ imageId }) {
+    auth
+      .deleteNew({ idNew: imageId, token: jwt })
+      .then((resp) => {
+        setSavedCards(savedCards.filter((c) => c.id !== imageId));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (

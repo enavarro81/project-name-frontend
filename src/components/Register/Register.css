@@ -1,0 +1,8 @@
+
+.popup__form-signup {
+    display: none;
+}
+
+.popup__form-signup_theme_opened {
+    display: block;
+}
