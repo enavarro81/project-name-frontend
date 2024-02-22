@@ -1,10 +1,14 @@
 import React from 'react';
 import './PopupWithForm.css';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
 import { useNavigate } from 'react-router-dom';
+import * as auth from '../../utils/MainApi';
 
 function PopupWithform(props) {
   const navigate = useNavigate();
 
+  //Hook que me permite activar eventListener para cerror el popup con la tecla esc
   React.useEffect(() => {
     const handleKeyDown = (event) => {
       if (props.isOpen && event.key === 'Escape') {
@@ -18,6 +22,7 @@ function PopupWithform(props) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
+    // eslint-disable-next-line
   }, [props.isOpen]);
 
   const handleClick = (event) => {
@@ -38,6 +43,7 @@ function PopupWithform(props) {
     }
   };
 
+  //funcion para validar los campos email
   const handleChangeEmail = (event) => {
     const emailError = document.querySelector(`#${event.target.id}-error`);
 
@@ -50,13 +56,14 @@ function PopupWithform(props) {
     isValidForm(event.target.parentElement.id);
   };
 
+  //funcion para validar los campos password
   const handleChangePassword = (event) => {
     const passwordError = document.querySelector(`#${event.target.id}-error`);
 
     const length = event.target.value.length;
 
-    if (length < 4) {
-      passwordError.textContent = 'Contraseña debe contener mínimo 4 dígitos';
+    if (length < 8) {
+      passwordError.textContent = 'Contraseña debe contener mínimo 8 dígitos';
     } else {
       passwordError.textContent = '';
     }
@@ -64,13 +71,16 @@ function PopupWithform(props) {
     isValidForm(event.target.parentElement.id);
   };
 
+  //funcion para validar el campo usuario
   const handleChangeUser = (event) => {
     const userError = document.querySelector(`#${event.target.id}-error`);
 
     const length = event.target.value.length;
 
-    if (length < 8) {
-      userError.textContent = 'Usuario debe contener mínimo 8 dígitos';
+    if (length < 2) {
+      userError.textContent = 'Usuario debe contener mínimo 2 dígitos';
+    } else if (length > 30) {
+      userError.textContent = 'Usuario debe contener máximo 30 dígitos';
     } else {
       userError.textContent = '';
     }
@@ -78,6 +88,7 @@ function PopupWithform(props) {
     isValidForm(event.target.parentElement.id);
   };
 
+  //funcion para verificar qu todos los datos del form estan ingresados correctamente
   const isValidForm = (parentName) => {
     const popupForm = document.querySelector(`#${parentName}-button`);
 
@@ -147,36 +158,43 @@ function PopupWithform(props) {
     props.onSignin();
   };
 
-  const handleSigninSubmit = (e) => {
+  const handleSignupSubmit = (e) => {
     e.preventDefault();
-    props.onSuccess();
+
+    const email = document.querySelector(`#signup-email`).value;
+    const password = document.querySelector(`#signup-password`).value;
+    const name = document.querySelector(`#signup-user`).value;
+
+    auth
+      .register({ email, password, name })
+      .then((res) => {
+        props.onSuccess();
+      })
+      .catch((err) => {
+        const formError = document.querySelector(`#signup-form-error`);
+        formError.textContent = err;
+      });
   };
 
   const handleSessionSubmit = (e) => {
     e.preventDefault();
 
-    const formElements = document
-      .querySelector(`#${e.target.id}`)
-      .querySelectorAll('input');
+    const email = document.querySelector(`#session-email`).value;
+    const password = document.querySelector(`#session-password`).value;
 
-    //esta parte es temporal para seguir con el flujo del sitio
-    let usuario = '';
-
-    formElements.forEach((element) => {
-      if (element.id === 'session-email') {
-        usuario = element.value;
-      }
-    });
-
-    const posicion = usuario.indexOf('@');
-    usuario = usuario.substring(0, posicion);
-
-    // fin de seccion temporal
-
-    props.onLogin(usuario);
-    resetPopupForm();
-    navigate('/saved-news', { replace: true });
-    props.onClosePopup();
+    auth
+      .authorize({ email, password })
+      .then((res) => {
+        localStorage.setItem('jwt', res.token);
+        props.onLogin('');
+        resetPopupForm();
+        props.onClosePopup();
+        navigate('/', { replace: true });
+      })
+      .catch((err) => {
+        const formError = document.querySelector(`#session-form-error`);
+        formError.textContent = err;
+      });
   };
 
   const isValidEmail = (email) => {
@@ -198,136 +216,29 @@ function PopupWithform(props) {
         name='popup-button-close'
         onClick={props.onClosePopup}
       ></div>
-      <form
-        className={`popup__form popup__form-session ${
-          props.isOpenSigin ? 'popup__form-session_theme_opened' : ''
-        }`}
-        id='popup-session'
-        name='popup-session'
-        onSubmit={handleSessionSubmit}
-        noValidate
-      >
-        <p className='popup__title'>Iniciar sesión</p>
-        <p className='popup__email-title'>Correo electrónico</p>
-        <input
-          className='popup__email-input'
-          type='email'
-          id='session-email'
-          name='session-email'
-          placeholder='Introduce tu correo electrónico'
-          onChange={handleChangeEmail}
-          onKeyDown={(event) => {
-            if (event.keyCode === 13) {
-              event.preventDefault();
-            }
-          }}
-          required
+      {props.isOpenSigin ? (
+        <Login
+          isOpenSigin={props.isOpenSigin}
+          handleSessionSubmit={handleSessionSubmit}
+          handleChangeEmail={handleChangeEmail}
+          handleChangePassword={handleChangePassword}
+          handleClickRegister={handleClickRegister}
         />
-        <p
-          id='session-email-error'
-          name='session-email-error'
-          className='popup__error'
-        ></p>
-        <p className='popup__password-title'>Contraseña</p>
-        <input
-          className='popup__password-input'
-          type='password'
-          id='session-password'
-          name='session-password'
-          placeholder='Introduce tu contraseña'
-          onChange={handleChangePassword}
-          onKeyDown={(event) => {
-            if (event.keyCode === 13) {
-              event.preventDefault();
-            }
-          }}
-          required
+      ) : (
+        ''
+      )}
+      {props.isOpenRegister ? (
+        <Register
+          isOpenRegister={props.isOpenRegister}
+          handleSignupSubmit={handleSignupSubmit}
+          handleChangeEmail={handleChangeEmail}
+          handleChangePassword={handleChangePassword}
+          handleChangeUser={handleChangeUser}
+          handleClickSignin={handleClickSignin}
         />
-        <p
-          className='popup__error'
-          id='session-password-error'
-          name='session-password-error'
-        ></p>
-        <p className='popup__error popup__error-submit'></p>
-        <button
-          type='submit'
-          id='popup-session-button'
-          name='popup-session-button'
-          className='popup__button popup__button_disable'
-        >
-          Iniciar sesión
-        </button>
-        <p className='popup__signin' onClick={handleClickRegister}>
-          inscribirse
-        </p>
-      </form>
-      <form
-        className={`popup__form popup__form-signin ${
-          props.isOpenRegister ? 'popup__form-signin_theme_opened' : ''
-        }`}
-        id='popup-signin'
-        name='popup-signin'
-        onSubmit={handleSigninSubmit}
-        noValidate
-      >
-        <p className='popup__title'>Inscribirse</p>
-        <p className='popup__email-title'>Correo electrónico</p>
-        <input
-          className='popup__email-input'
-          type='email'
-          id='signin-email'
-          name='signin-email'
-          placeholder='Introduce tu correo electrónico'
-          onChange={handleChangeEmail}
-          required
-        />
-        <p
-          className='popup__error'
-          id='signin-email-error'
-          name='signin-email-error'
-        ></p>
-        <p className='popup__password-title'>Contraseña</p>
-        <input
-          className='popup__password-input'
-          type='password'
-          id='signin-password'
-          name='signin-password'
-          placeholder='Introduce tu contraseña'
-          onChange={handleChangePassword}
-          required
-        />
-        <p
-          className='popup__error'
-          id='signin-password-error'
-          name='signin-password-error'
-        ></p>
-        <p className='popup__user-title'>Nombre de usuario</p>
-        <input
-          className='popup__user-input'
-          id='signin-user'
-          name='signin-user'
-          placeholder='Introduce tu nombre de usuario'
-          onChange={handleChangeUser}
-          required
-        />
-        <p
-          className='popup__error'
-          id='signin-user-error'
-          name='signin-user-error'
-        ></p>
-        <p className='popup__error popup__error-submit'></p>
-        <button
-          type='submit'
-          id='popup-signin-button'
-          name='popup-signin-button'
-          className='popup__button popup__button_disable'
-        >
-          Inscribirse
-        </button>
-        <p className='popup__signin' onClick={handleClickSignin}>
-          o iniciar sesión
-        </p>
-      </form>
+      ) : (
+        ''
+      )}
       <div
         className={`popup__form popup__form-success ${
           props.isOpenSucces ? 'popup__form-success_theme_opened' : ''
